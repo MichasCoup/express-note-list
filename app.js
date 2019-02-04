@@ -5,17 +5,18 @@ const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 const flash = require('connect-flash');
 const session = require('express-session');
-const passport = require('passport')
+const passport = require('passport');
 const mongoose = require('mongoose');
 
-require('./config/database');
+// DB Config
+const db = require('./config/database');
 
 // Map global promis - get rid of warning
 mongoose.Promise = global.Promise;
 // Connect to mongoose
-mongoose.connect('mongodb://localhost/vidjot', { useNewUrlParser: true }).then(() => {
-	console.log('MongoDB Connected …')
-}).catch(err => console.log(err));
+mongoose.connect(db.mongoURI, { useNewUrlParser: true })
+	.then(() => {console.log('MongoDB Connected …')})
+	.catch(err => console.log(err));
 
 const port = process.env.PORT || 3000;
 const app = express();
